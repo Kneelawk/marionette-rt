@@ -35,10 +35,8 @@ java {
 
 publishing {
     publications {
-        marionetteLib(MavenPublication) {
+        marionetteRt(MavenPublication) {
             from components.java
-            artifact sourcesJar
-            artifact javadocJar
             pom {
                 name = 'Marionette Runtime Library'
                 description = 'The library used during Marionette Minecraft integration tests'
