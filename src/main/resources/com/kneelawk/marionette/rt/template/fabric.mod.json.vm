@@ -3,7 +3,7 @@
   "id": "${data.id}",
   "version": "0.1.0-SNAPSHOT",
   "name": "${data.name}",
-  "description": "\"${data.name}\" generated Marionette mod.",
+  "description": "'${data.name}' generated Marionette mod.",
   "authors": [],
   "contact": {
     "homepage": "",
