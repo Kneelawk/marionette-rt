@@ -1,5 +1,6 @@
 package com.kneelawk.marionette.rt.instance;
 
+import com.kneelawk.marionette.rt.MarionetteConstants;
 import com.kneelawk.marionette.rt.rmi.RMIConnectionManager;
 import org.apache.commons.io.FileUtils;
 
@@ -52,9 +53,9 @@ public abstract class AbstractMinecraftInstanceBuilder {
     }
 
     protected void setup() throws IOException {
-        classpathString = System.getProperty("com.kneelawk.marionette.minecraft_classpath");
-        File projectDir = new File(System.getProperty("com.kneelawk.marionette.project_root_dir"));
-        File buildDir = new File(System.getProperty("com.kneelawk.marionette.project_build_dir"));
+        classpathString = System.getProperty(MarionetteConstants.MINECRAFT_CLASSPATH_PROPERTY);
+        File projectDir = new File(System.getProperty(MarionetteConstants.PROJECT_DIR_PROPERTY));
+        File buildDir = new File(System.getProperty(MarionetteConstants.PROJECT_BUILD_DIR_PROPERTY));
         File marionetteDir = new File(buildDir, "marionette");
         File instancesDir = new File(marionetteDir, "instances");
         File instanceDir = new File(instancesDir, instanceName);
