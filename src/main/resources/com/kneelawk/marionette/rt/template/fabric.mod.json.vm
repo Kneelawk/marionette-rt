@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "${data.id}",
+  "version": "0.1.0-SNAPSHOT",
+  "name": "${data.name}",
+  "description": "\"${data.name}\" generated Marionette mod.",
+  "authors": [],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+  "license": "MIT",
+  "icon": "",
+  "environment": "*",
+  "entrypoints": {
+    "main": [],
+    "client": [],
+    "server": [],
+    "preLaunch": []
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.9.2",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

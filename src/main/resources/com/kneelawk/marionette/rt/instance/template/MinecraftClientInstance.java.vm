@@ -1,0 +1,22 @@
+package ${data.packageName};
+
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.SettableFuture;
+import com.kneelawk.marionette.rt.instance.AbstractMinecraftInstance;
+import com.kneelawk.marionette.rt.instance.LogWatcherThread;
+
+import java.rmi.RemoteException;
+
+public class ${data.className} extends AbstractMinecraftInstance {
+
+    public MinecraftClientInstance(Process process, LogWatcherThread outWatcher,
+                                   LogWatcherThread errWatcher) {
+        super(process, outWatcher, errWatcher);
+        this.rmiAccess = rmiAccess;
+    }
+
+    @Override
+    public void startMinecraft() throws RemoteException {
+        rmiAccess.start();
+    }
+}
