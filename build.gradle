@@ -20,6 +20,14 @@ dependencies {
     implementation 'commons-io:commons-io:2.8.0'
 }
 
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("marionette-rt.properties") {
+        expand "marionette_version": project.version
+    }
+}
+
 java {
     withSourcesJar()
     withJavadocJar()
