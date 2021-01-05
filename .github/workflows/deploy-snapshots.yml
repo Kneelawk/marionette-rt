@@ -1,4 +1,4 @@
-name: deploy
+name: deploy-snapshots
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  deploy-snapshots:
     runs-on: ubuntu-20.04
     steps:
       - name: checkout repository
