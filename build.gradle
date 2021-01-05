@@ -69,7 +69,7 @@ publishing {
 if (System.getenv('BINTRAY_KEY') != null && System.getenv('BINTRAY_USER') != null) {
     bintray {
         user = System.getenv('BINTRAY_USER')
-        key = System.getenv('BINTRAY_USER')
+        key = System.getenv('BINTRAY_KEY')
         publications = ['marionetteRt']
 
         pkg {
