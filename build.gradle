@@ -40,7 +40,7 @@ publishing {
             pom {
                 name = 'Marionette Runtime Library'
                 description = 'The library used during Marionette Minecraft integration tests'
-                url = 'https://github.com/Kneelawk/Marionette'
+                url = 'https://github.com/Kneelawk/marionette-rt'
                 packaging = 'jar'
                 licenses {
                     license {
