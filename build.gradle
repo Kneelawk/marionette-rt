@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'io.freefair.lombok' version '5.3.0'
+    id 'com.jfrog.bintray' version '1.8.5'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -55,6 +56,30 @@ publishing {
                         email = 'kneelawk@gmail.com'
                     }
                 }
+                scm {
+                    connection = 'scm:git:git://github.com/Kneelawk/marionette-rt.git'
+                    developerConnection = 'scm:git:ssh://github.com:Kneelawk/marionette-rt.git'
+                    url = 'https://github.com/Kneelawk/marionette-rt/tree/main'
+                }
+            }
+        }
+    }
+}
+
+if (System.getenv('BINTRAY_KEY') != null && System.getenv('BINTRAY_USER') != null) {
+    bintray {
+        user = System.getenv('BINTRAY_USER')
+        key = System.getenv('BINTRAY_USER')
+        publications = ['marionetteRt']
+
+        pkg {
+            repo = 'maven'
+            name = 'marionette-rt'
+            licenses = ['MIT']
+            vcsUrl = 'https://github.com/Kneelawk/marionette-rt.git'
+            version {
+                name = project.version
+                released = new Date()
             }
         }
     }
