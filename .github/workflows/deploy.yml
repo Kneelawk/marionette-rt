@@ -1,12 +1,12 @@
-name: deploy-snapshot
+name: deploy
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
-  deploy-shapshot:
+  deploy:
     runs-on: ubuntu-20.04
     steps:
       - name: checkout repository
@@ -21,7 +21,7 @@ jobs:
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
-      - name: deploy-bintray-snapshot
+      - name: deploy-bintray
         run: ./gradlew bintrayUpload
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
