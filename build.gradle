@@ -9,7 +9,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 version = '0.1.0-SNAPSHOT'
-group = 'com.kneelawk'
+group = 'com.kneelawk.marionette'
 
 repositories {
     jcenter()
