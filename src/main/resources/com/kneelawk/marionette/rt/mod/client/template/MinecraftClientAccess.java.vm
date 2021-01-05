@@ -1,0 +1,13 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.mod.client.template.MinecraftClientAccessTData" *#
+package ${data.packageName};
+
+import com.kneelawk.marionette.rt.mod.AbstractMinecraftAccess;
+
+import java.rmi.RemoteException;
+
+#foreach($im in ${data.importNames})
+import $im;
+#end
+
+public class ${data.className} extends AbstractMinecraftAccess implements ${data.rmiClass} {
+}

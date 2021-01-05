@@ -1,0 +1,35 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.mod.server.template.MarionetteServerPreLaunchTData" *#
+package ${data.packageName};
+
+import com.kneelawk.marionette.rt.mod.AbstractMinecraftAccess;
+import com.kneelawk.marionette.rt.util.ThreadWatchUnbinder;
+import com.kneelawk.marionette.rt.rmi.RMIUtils;
+
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+#foreach($im in ${data.importNames})
+import $im;
+#end
+
+public class ${data.className} {
+    public static AbstractMinecraftAccess setup(String instanceName, int rmiPort) {
+        ${data.accessClass} access = new ${data.accessClass}();
+
+        try {
+            ${data.rmiClass} stub = RMIUtils.export(access);
+
+            ThreadWatchUnbinder unbinder = new ThreadWatchUnbinder(access);
+            unbinder.start();
+
+            Registry registry = LocateRegistry.getRegistry(rmiPort);
+            registry.bind(instanceName, stub);
+        } catch (RemoteException | AlreadyBoundException e) {
+            throw new RuntimeException("Unable to bind to marionettist!", e);
+        }
+
+        return access;
+    }
+}

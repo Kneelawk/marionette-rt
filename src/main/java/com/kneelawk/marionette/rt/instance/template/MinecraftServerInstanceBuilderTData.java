@@ -1,9 +1,17 @@
 package com.kneelawk.marionette.rt.instance.template;
 
-import lombok.Data;
+import com.google.common.collect.ImmutableList;
+import lombok.Builder;
+import lombok.Singular;
+import lombok.Value;
 
-@Data
+@Value
+@Builder(builderClassName = "Builder")
 public class MinecraftServerInstanceBuilderTData {
-    private final String packageName;
-    private final String className;
+    String packageName;
+    String className;
+    @Singular
+    ImmutableList<String> importNames;
+    String instanceClass;
+    String rmiClass;
 }

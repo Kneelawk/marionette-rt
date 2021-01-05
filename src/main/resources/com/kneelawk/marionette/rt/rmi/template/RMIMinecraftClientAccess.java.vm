@@ -1,0 +1,13 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.rmi.template.RMIMinecraftClientAccessTData" *#
+package ${data.packageName};
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+#foreach($im in ${data.importNames})
+import $im;
+#end
+
+public interface ${data.className} extends Remote {
+    void start() throws RemoteException;
+}

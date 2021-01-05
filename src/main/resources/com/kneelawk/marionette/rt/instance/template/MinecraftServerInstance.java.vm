@@ -1,4 +1,4 @@
-#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.instance.template.MinecraftClientInstanceTData" *#
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.instance.template.MinecraftServerInstanceTData" *#
 package ${data.packageName};
 
 import com.google.common.util.concurrent.ListenableFuture;

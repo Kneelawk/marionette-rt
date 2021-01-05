@@ -1,4 +1,4 @@
-package com.kneelawk.marionette.rt.instance.template;
+package com.kneelawk.marionette.rt.rmi.template;
 
 import com.google.common.collect.ImmutableList;
 import lombok.Builder;
@@ -7,10 +7,9 @@ import lombok.Value;
 
 @Value
 @Builder(builderClassName = "Builder")
-public class MinecraftClientInstanceTData {
+public class RMIMinecraftClientAccessTData {
     String packageName;
     String className;
     @Singular
     ImmutableList<String> importNames;
-    String rmiClass;
 }

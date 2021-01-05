@@ -1,9 +1,15 @@
 package com.kneelawk.marionette.rt.template;
 
-import lombok.Data;
+import com.google.common.collect.ImmutableList;
+import lombok.Builder;
+import lombok.Singular;
+import lombok.Value;
 
-@Data
+@Value
+@Builder(builderClassName = "Builder")
 public class FabricModJsonTData {
-    private final String id;
-    private final String name;
+    String id;
+    String name;
+    @Singular
+    ImmutableList<String> preLaunchEntryPoints;
 }

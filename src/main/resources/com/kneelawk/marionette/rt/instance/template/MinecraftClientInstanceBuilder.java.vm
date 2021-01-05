@@ -1,17 +1,23 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.instance.template.MinecraftClientInstanceBuilderTData" *#
 package ${data.packageName};
 
 import com.kneelawk.marionette.rt.MarionetteConstants;
 import com.kneelawk.marionette.rt.instance.LogWatcherThread;
+import com.kneelawk.marionette.rt.instance.AbstractMinecraftInstanceBuilder;
 import com.kneelawk.marionette.rt.rmi.RMIConnectionManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+#foreach($im in ${data.importNames})
+import $im;
+#end
+
 public class ${data.className} extends AbstractMinecraftInstanceBuilder {
     private String username;
 
-    public MinecraftClientInstanceBuilder(String instanceName) {
+    public ${data.className}(String instanceName) {
         super(instanceName);
         username = instanceName;
     }
@@ -25,7 +31,7 @@ public class ${data.className} extends AbstractMinecraftInstanceBuilder {
     }
 
     @Override
-    public MinecraftClientInstance start(RMIConnectionManager manager) throws IOException {
+    public ${data.instanceClass} start(RMIConnectionManager manager) throws IOException {
         setup();
 
         List<String> commands = new ArrayList<>();
@@ -58,6 +64,8 @@ public class ${data.className} extends AbstractMinecraftInstanceBuilder {
                 new LogWatcherThread(minecraft.getErrorStream(), System.err, "[" + instanceName + "] ");
         errWatcher.start();
 
-        return new MinecraftClientInstance(minecraft, outWatcher, errWatcher);
+        ${data.rmiClass} rmiAccess = manager.waitForBinding(instanceName);
+
+        return new ${data.instanceClass}(minecraft, outWatcher, errWatcher, rmiAccess);
     }
 }

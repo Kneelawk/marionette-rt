@@ -1,4 +1,4 @@
-package com.kneelawk.marionette.rt;
+package com.kneelawk.marionette.rt.util;
 
 import com.kneelawk.marionette.rt.rmi.CurrentThread;
 import org.jetbrains.annotations.NotNull;

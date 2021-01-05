@@ -1,3 +1,5 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.template.FabricModJsonTData" *#
+#* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *#
 {
   "schemaVersion": 1,
   "id": "${data.id}",
@@ -16,7 +18,9 @@
     "main": [],
     "client": [],
     "server": [],
-    "preLaunch": []
+    "preLaunch": [
+      $utils.joinQuoted(${data.preLaunchEntryPoints}, ", ", "", "")
+    ]
   },
   "mixins": [],
   "depends": {
