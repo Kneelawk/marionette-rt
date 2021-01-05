@@ -22,7 +22,7 @@ jobs:
       - name: build
         run: ./gradlew build
       - name: deploy-bintray-snapshot
-        run: ./gradlew build
+        run: ./gradlew bintrayUpload
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
