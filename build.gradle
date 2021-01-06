@@ -19,6 +19,9 @@ dependencies {
     api 'com.google.guava:guava:21.0'
     implementation 'org.jetbrains:annotations:19.0.0'
     implementation 'commons-io:commons-io:2.8.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 processResources {
@@ -32,6 +35,10 @@ processResources {
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+test {
+    useJUnitPlatform()
 }
 
 publishing {
