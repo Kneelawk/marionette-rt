@@ -4,10 +4,12 @@ import com.kneelawk.marionette.rt.instance.template.MinecraftClientInstanceBuild
 import com.kneelawk.marionette.rt.instance.template.MinecraftClientInstanceTData;
 import com.kneelawk.marionette.rt.instance.template.MinecraftServerInstanceBuilderTData;
 import com.kneelawk.marionette.rt.instance.template.MinecraftServerInstanceTData;
+import com.kneelawk.marionette.rt.mod.client.template.ClientGlobalSignalsTData;
 import com.kneelawk.marionette.rt.mod.client.template.MarionetteClientPreLaunchTData;
 import com.kneelawk.marionette.rt.mod.client.template.MinecraftClientAccessTData;
 import com.kneelawk.marionette.rt.mod.server.template.MarionetteServerPreLaunchTData;
 import com.kneelawk.marionette.rt.mod.server.template.MinecraftServerAccessTData;
+import com.kneelawk.marionette.rt.mod.server.template.ServerGlobalSignalsTData;
 import com.kneelawk.marionette.rt.mod.template.MarionetteModPreLaunchTData;
 import com.kneelawk.marionette.rt.rmi.template.RMIMinecraftClientAccessTData;
 import com.kneelawk.marionette.rt.rmi.template.RMIMinecraftServerAccessTData;
@@ -61,5 +63,13 @@ public class MarionetteTemplates {
 
     public static InputStream getServerAccessTemplate() {
         return MinecraftServerAccessTData.class.getResourceAsStream("MinecraftServerAccess.java.vm");
+    }
+
+    public static InputStream getClientGlobalSignalsTemplate() {
+        return ClientGlobalSignalsTData.class.getResourceAsStream("ClientGlobalSignals.java.vm");
+    }
+
+    public static InputStream getServerGlobalSignalsTemplate() {
+        return ServerGlobalSignalsTData.class.getResourceAsStream("ServerGlobalSignals.java.vm");
     }
 }

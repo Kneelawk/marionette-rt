@@ -1,18 +1,18 @@
-package com.kneelawk.marionette.rt.instance.template;
+package com.kneelawk.marionette.rt.mod.server.template;
 
 import com.google.common.collect.ImmutableList;
+import com.kneelawk.marionette.rt.mod.template.MarionetteSignalTData;
 import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
 
 @Value
 @Builder(builderClassName = "Builder")
-public class MinecraftClientInstanceTData {
+public class ServerGlobalSignalsTData {
     String packageName;
     String className;
     @Singular
     ImmutableList<String> importNames;
-    String rmiClass;
     @Singular
-    ImmutableList<String> signalNames;
+    ImmutableList<MarionetteSignalTData> signals;
 }

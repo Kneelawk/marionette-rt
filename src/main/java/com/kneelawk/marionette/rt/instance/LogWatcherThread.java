@@ -1,5 +1,9 @@
 package com.kneelawk.marionette.rt.instance;
 
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.SettableFuture;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -12,6 +16,7 @@ public class LogWatcherThread extends Thread {
     private final OutputStream os;
     private final String prefix;
     private final List<String> errorMessages = new ArrayList<>();
+    private final SettableFuture<Void> completionFuture = SettableFuture.create();
 
     public LogWatcherThread(InputStream is, OutputStream os) {
         this(is, os, null);
@@ -32,6 +37,7 @@ public class LogWatcherThread extends Thread {
             String line = in.nextLine();
             if (line.startsWith("[FATAL]")) {
                 errorMessages.add(line);
+                completionFuture.setException(new LogErrorException(errorMessages.get(0)));
             }
 
             if (prefix != null) {
@@ -44,6 +50,22 @@ public class LogWatcherThread extends Thread {
         }
 
         out.close();
+
+        completionFuture.set(null);
+    }
+
+    public void chainFuture(SettableFuture<?> future) {
+        Futures.addCallback(completionFuture, new FutureCallback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                future.setException(new InstanceException("Game finished while future was waiting."));
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                future.setException(t);
+            }
+        });
     }
 
     public void checkError() throws LogErrorException {

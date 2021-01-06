@@ -1,7 +1,9 @@
 #* @vtlvariable name="data" type="com.kneelawk.marionette.rt.mod.server.template.MinecraftServerAccessTData" *#
+#* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *#
 package ${data.packageName};
 
 import com.kneelawk.marionette.rt.mod.AbstractMinecraftAccess;
+import com.kneelawk.marionette.rt.rmi.RMIRunnable;
 
 import java.rmi.RemoteException;
 
@@ -10,4 +12,12 @@ import $im;
 #end
 
 public class ${data.className} extends AbstractMinecraftAccess implements ${data.rmiClass} {
+#foreach($signal in $data.signalNames)
+#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $signal))
+
+    @Override
+    public void add${funcName}Signal(RMIRunnable callback) throws RemoteException {
+        ${data.signalClass}.add${funcName}Listener(callback);
+    }
+#end
 }

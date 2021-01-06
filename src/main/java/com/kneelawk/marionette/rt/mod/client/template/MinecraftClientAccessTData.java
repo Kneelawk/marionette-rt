@@ -13,4 +13,7 @@ public class MinecraftClientAccessTData {
     @Singular
     ImmutableList<String> importNames;
     String rmiClass;
+    String signalClass;
+    @Singular
+    ImmutableList<String> signalNames;
 }

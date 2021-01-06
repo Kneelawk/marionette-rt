@@ -1,5 +1,8 @@
 #* @vtlvariable name="data" type="com.kneelawk.marionette.rt.rmi.template.RMIMinecraftClientAccessTData" *#
+#* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *#
 package ${data.packageName};
+
+import com.kneelawk.marionette.rt.rmi.RMIRunnable;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -10,4 +13,8 @@ import $im;
 
 public interface ${data.className} extends Remote {
     void start() throws RemoteException;
+#foreach($signal in ${data.signalNames})
+
+    void add${utils.lowerCamelCase.to($utils.upperCamelCase, $signal)}Signal(RMIRunnable signalCallback) throws RemoteException;
+#end
 }

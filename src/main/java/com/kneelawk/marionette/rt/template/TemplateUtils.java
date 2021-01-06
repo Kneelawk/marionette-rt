@@ -1,5 +1,7 @@
 package com.kneelawk.marionette.rt.template;
 
+import com.google.common.base.CaseFormat;
+
 public class TemplateUtils {
     private static final TemplateUtils INSTNACE = new TemplateUtils();
 
@@ -38,5 +40,25 @@ public class TemplateUtils {
         }
         tmp.append(suffix);
         return tmp.toString();
+    }
+
+    public CaseFormat getLowerHyphenCase() {
+        return CaseFormat.LOWER_HYPHEN;
+    }
+
+    public CaseFormat getLowerUnderscoreCase() {
+        return CaseFormat.LOWER_UNDERSCORE;
+    }
+
+    public CaseFormat getLowerCamelCase() {
+        return CaseFormat.LOWER_CAMEL;
+    }
+
+    public CaseFormat getUpperCamelCase() {
+        return CaseFormat.UPPER_CAMEL;
+    }
+
+    public CaseFormat getUpperUnderscoreCase() {
+        return CaseFormat.UPPER_UNDERSCORE;
     }
 }

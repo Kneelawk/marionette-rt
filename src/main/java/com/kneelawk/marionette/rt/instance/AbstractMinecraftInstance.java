@@ -1,5 +1,7 @@
 package com.kneelawk.marionette.rt.instance;
 
+import com.google.common.util.concurrent.SettableFuture;
+
 import java.rmi.RemoteException;
 
 public abstract class AbstractMinecraftInstance {
@@ -19,6 +21,11 @@ public abstract class AbstractMinecraftInstance {
     }
 
     public abstract void startMinecraft() throws RemoteException;
+
+    protected void chainFutureError(SettableFuture<?> future) {
+        outWatcher.chainFuture(future);
+        errWatcher.chainFuture(future);
+    }
 
     public void finish() throws InterruptedException, InstanceException {
         if (process.waitFor() != 0) {

@@ -12,4 +12,6 @@ public class RMIMinecraftServerAccessTData {
     String className;
     @Singular
     ImmutableList<String> importNames;
+    @Singular
+    ImmutableList<String> signalNames;
 }

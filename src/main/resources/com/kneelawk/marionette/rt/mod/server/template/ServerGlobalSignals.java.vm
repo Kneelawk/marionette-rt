@@ -1,0 +1,31 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.mod.server.template.ServerGlobalSignalsTData" *#
+#* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *#
+package $data.packageName;
+
+import com.kneelawk.marionette.rt.rmi.RMIRunnable;
+import com.kneelawk.marionette.rt.signal.OneShotSignal;
+import com.kneelawk.marionette.rt.signal.RepeatedSignal;
+import com.kneelawk.marionette.rt.signal.ReusableSignal;
+import com.kneelawk.marionette.rt.util.ExecutionUtils;
+import com.kneelawk.marionette.rt.util.MarionetteExecutors;
+
+#foreach($im in ${data.importNames})
+import $im;
+#end
+
+public class $data.className {
+#foreach($signal in ${data.signals})
+#set($fieldName = $utils.lowerCamelCase.to($utils.upperUnderscoreCase, $signal.name))
+#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $signal.name))
+
+    private static final $signal.type.className $fieldName = new ${signal.type.className}();
+
+    public static void signal${funcName}() {
+        ${fieldName}.signal();
+    }
+
+    public static void add${funcName}Listener(RMIRunnable listener) {
+        ${fieldName}.addListener(ExecutionUtils.toRunnable(listener), MarionetteExecutors.getCallbackConsumerExecutor());
+    }
+#end
+}
