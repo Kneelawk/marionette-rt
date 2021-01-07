@@ -1,10 +1,12 @@
 #* @vtlvariable name="data" type="com.kneelawk.marionette.rt.instance.template.MinecraftServerInstanceTData" *#
+#* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *#
 package ${data.packageName};
 
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import com.kneelawk.marionette.rt.instance.AbstractMinecraftInstance;
 import com.kneelawk.marionette.rt.instance.LogWatcherThread;
+import com.kneelawk.marionette.rt.rmi.RMIUtils;
 
 import java.rmi.RemoteException;
 
@@ -25,4 +27,14 @@ public class ${data.className} extends AbstractMinecraftInstance {
     public void startMinecraft() throws RemoteException {
         rmiAccess.start();
     }
+#foreach($signal in $data.signalNames)
+#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $signal))
+
+    public ListenableFuture<Void> create${funcName}Future() throws RemoteException {
+        SettableFuture<Void> future = SettableFuture.create();
+        rmiAccess.add${funcName}Signal(RMIUtils.export(() -> future.set(null)));
+        chainFutureError(future);
+        return future;
+    }
+#end
 }

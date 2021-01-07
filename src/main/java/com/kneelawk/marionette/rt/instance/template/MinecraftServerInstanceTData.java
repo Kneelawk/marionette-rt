@@ -13,4 +13,6 @@ public class MinecraftServerInstanceTData {
     @Singular
     ImmutableList<String> importNames;
     String rmiClass;
+    @Singular
+    ImmutableList<String> signalNames;
 }
