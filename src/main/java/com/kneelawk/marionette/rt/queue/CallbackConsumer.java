@@ -1,4 +1,4 @@
-package com.kneelawk.marionette.rt.util;
+package com.kneelawk.marionette.rt.queue;
 
 import com.kneelawk.marionette.rt.rmi.CurrentThread;
 
