@@ -11,5 +11,5 @@ import $im;
 #end
 
 public interface $data.className #if($data.remote)extends Remote #end{
-    $data.returnType callback($utils.joinParameters($data.parameterTypes)) #if(!$data.exceptionTypes.isEmpty())throws $utils.join($data.exceptionTypes, ", ")#end
+    $data.returnType callback($utils.joinParameters($data.parameterTypes))#if(!$data.exceptionTypes.isEmpty()) throws $utils.join($data.exceptionTypes, ", ")#end;
 }

@@ -1,5 +1,6 @@
 package com.kneelawk.marionette.rt.template;
 
+import com.kneelawk.marionette.rt.callback.template.CallbackTData;
 import com.kneelawk.marionette.rt.instance.template.MinecraftClientInstanceBuilderTData;
 import com.kneelawk.marionette.rt.instance.template.MinecraftClientInstanceTData;
 import com.kneelawk.marionette.rt.instance.template.MinecraftServerInstanceBuilderTData;
@@ -71,5 +72,9 @@ public class MarionetteTemplates {
 
     public static InputStream getServerGlobalSignalsTemplate() {
         return ServerGlobalSignalsTData.class.getResourceAsStream("ServerGlobalSignals.java.vm");
+    }
+
+    public static InputStream getCallbackTemplate() {
+        return CallbackTData.class.getResourceAsStream("Callback.java.vm");
     }
 }
