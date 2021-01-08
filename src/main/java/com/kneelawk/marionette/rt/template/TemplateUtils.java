@@ -51,10 +51,14 @@ public class TemplateUtils {
     }
 
     public String joinParameters(Iterable<?> parameterTypes) {
+        return joinParameters(parameterTypes, false);
+    }
+
+    public String joinParameters(Iterable<?> parameterTypes, boolean firstComma) {
         StringBuilder tmp = new StringBuilder();
         int i = 0;
         for (Object o : parameterTypes) {
-            if (i != 0) {
+            if (i != 0 || firstComma) {
                 tmp.append(", ");
             }
             tmp.append(o).append(" p").append(i);

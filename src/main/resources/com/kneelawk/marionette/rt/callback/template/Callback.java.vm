@@ -2,6 +2,8 @@
 #* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *#
 package $data.packageName;
 
+import com.kneelawk.marionette.rt.rmi.CurrentThread;
+
 #if($data.remote)
 import java.rmi.Remote;
 #end
@@ -11,5 +13,5 @@ import $im;
 #end
 
 public interface $data.className #if($data.remote)extends Remote #end{
-    $data.returnType callback($utils.joinParameters($data.parameterTypes))#if(!$data.exceptionTypes.isEmpty()) throws $utils.join($data.exceptionTypes, ", ")#end;
+    $data.returnType callback(CurrentThread thread$utils.joinParameters($data.parameterTypes, true))#if(!$data.exceptionTypes.isEmpty()) throws $utils.join($data.exceptionTypes, ", ")#end;
 }
