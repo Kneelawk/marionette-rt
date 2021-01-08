@@ -1,0 +1,15 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.callback.template.CallbackTData" *#
+#* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *#
+package $data.packageName;
+
+#if($data.remote)
+import java.rmi.Remote;
+#end
+
+#foreach($im in ${data.importNames})
+import $im;
+#end
+
+public interface $data.className #if($data.remote)extends Remote #end{
+    $data.returnType callback($utils.joinParameters($data.parameterTypes)) #if(!$data.exceptionTypes.isEmpty())throws $utils.join($data.exceptionTypes, ", ")#end
+}

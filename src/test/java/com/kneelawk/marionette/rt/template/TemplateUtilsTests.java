@@ -36,6 +36,13 @@ public class TemplateUtilsTests {
     }
 
     @Test
+    void testJoinParameters() {
+        assertEquals("Foo p0, Bar p1", TemplateUtils.getInstance().joinParameters(ImmutableList.of("Foo", "Bar")));
+        assertEquals("Foo p0", TemplateUtils.getInstance().joinParameters(ImmutableList.of("Foo")));
+        assertEquals("", TemplateUtils.getInstance().joinParameters(ImmutableList.of()));
+    }
+
+    @Test
     void testCaseFormats() {
         assertEquals(CaseFormat.LOWER_HYPHEN, TemplateUtils.getInstance().getLowerHyphenCase());
         assertEquals(CaseFormat.LOWER_UNDERSCORE, TemplateUtils.getInstance().getLowerUnderscoreCase());

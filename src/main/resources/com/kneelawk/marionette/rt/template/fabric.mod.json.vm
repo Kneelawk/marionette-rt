@@ -19,7 +19,7 @@
     "client": [],
     "server": [],
     "preLaunch": [
-      $utils.joinQuoted(${data.preLaunchEntryPoints}, ", ", "", "")
+      $utils.joinQuoted(${data.preLaunchEntryPoints}, ", ")
     ]
   },
   "mixins": [],
