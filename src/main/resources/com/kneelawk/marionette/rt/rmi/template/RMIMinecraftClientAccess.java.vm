@@ -17,4 +17,8 @@ public interface ${data.className} extends Remote {
 
     void add${utils.lowerCamelCase.to($utils.upperCamelCase, $signal)}Signal(RMIRunnable signalCallback) throws RemoteException;
 #end
+#foreach($queue in $data.queueCallbacks)
+
+    void add${utils.lowerCamelCase.to($utils.upperCamelCase, $queue.callbackName)}Callback($queue.callbackClass queueCallback) throws RemoteException;
+#end
 }

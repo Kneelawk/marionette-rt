@@ -15,4 +15,6 @@ public class MinecraftServerInstanceTData {
     String rmiClass;
     @Singular
     ImmutableList<String> signalNames;
+    @Singular
+    ImmutableList<InstanceQueueCallbackInfo> queueCallbacks;
 }

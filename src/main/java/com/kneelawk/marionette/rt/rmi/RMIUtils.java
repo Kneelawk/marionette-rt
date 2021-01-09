@@ -1,6 +1,9 @@
 package com.kneelawk.marionette.rt.rmi;
 
+import com.kneelawk.marionette.rt.util.ThreadWatchUnbinder;
+
 import java.lang.ref.WeakReference;
+import java.rmi.NoSuchObjectException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -9,6 +12,12 @@ import java.util.WeakHashMap;
 
 public class RMIUtils {
     private static final Map<Object, WeakReference<Object>> EXPORTS = new WeakHashMap<>();
+    private static final ThreadWatchUnbinder UNBINDER =
+            new ThreadWatchUnbinder(RMIUtils::unbindAll, "RMIUtils-Unbinder");
+
+    static {
+        UNBINDER.start();
+    }
 
     @SuppressWarnings("unchecked")
     public static <T extends Remote> T export(T original) throws RemoteException {
@@ -37,5 +46,19 @@ public class RMIUtils {
         }
 
         return original;
+    }
+
+    private static void unbindAll() {
+        System.out.println("Unbinding all RMI objects...");
+        for (WeakReference<Object> originalRef : EXPORTS.values()) {
+            Object original = originalRef.get();
+            if (original != null) {
+                try {
+                    UnicastRemoteObject.unexportObject((Remote) original, true);
+                } catch (NoSuchObjectException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

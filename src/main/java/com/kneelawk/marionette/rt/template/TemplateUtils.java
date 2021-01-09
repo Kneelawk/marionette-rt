@@ -20,6 +20,10 @@ public class TemplateUtils {
         return "\"" + str + "\"";
     }
 
+    public String join(Iterable<?> iterable, String joiner) {
+        return join(iterable, joiner, "", "");
+    }
+
     public String join(Iterable<?> iterable, String joiner, String prefix, String suffix) {
         StringBuilder tmp = new StringBuilder(prefix);
         String joinerTmp = "";
@@ -31,6 +35,10 @@ public class TemplateUtils {
         return tmp.toString();
     }
 
+    public String joinQuoted(Iterable<?> iterable, String joiner) {
+        return joinQuoted(iterable, joiner, "", "");
+    }
+
     public String joinQuoted(Iterable<?> iterable, String joiner, String prefix, String suffix) {
         StringBuilder tmp = new StringBuilder(prefix);
         String joinerTmp = "";
@@ -39,6 +47,38 @@ public class TemplateUtils {
             joinerTmp = joiner;
         }
         tmp.append(suffix);
+        return tmp.toString();
+    }
+
+    public String joinParameters(Iterable<?> parameterTypes) {
+        return joinParameters(parameterTypes, false);
+    }
+
+    public String joinParameters(Iterable<?> parameterTypes, boolean firstComma) {
+        StringBuilder tmp = new StringBuilder();
+        int i = 0;
+        for (Object o : parameterTypes) {
+            if (i != 0 || firstComma) {
+                tmp.append(", ");
+            }
+            tmp.append(o).append(" p").append(i);
+            i++;
+        }
+        return tmp.toString();
+    }
+
+    public String parameters(int count) {
+        return parameters(count, false);
+    }
+
+    public String parameters(int count, boolean firstComma) {
+        StringBuilder tmp = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            if (i != 0 || firstComma) {
+                tmp.append(", ");
+            }
+            tmp.append("p").append(i);
+        }
         return tmp.toString();
     }
 

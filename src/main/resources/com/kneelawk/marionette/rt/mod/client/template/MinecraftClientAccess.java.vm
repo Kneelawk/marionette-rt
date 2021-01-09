@@ -20,4 +20,12 @@ public class ${data.className} extends AbstractMinecraftAccess implements ${data
         ${data.signalClass}.add${funcName}Listener(callback);
     }
 #end
+#foreach($queue in $data.queueCallbacks)
+#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $queue.callbackName))
+
+    @Override
+    public void add${funcName}Callback($queue.callbackClass callback) {
+        ${data.queueClass}.add${funcName}Callback(callback);
+    }
+#end
 }

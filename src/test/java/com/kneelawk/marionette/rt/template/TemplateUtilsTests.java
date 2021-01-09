@@ -36,6 +36,27 @@ public class TemplateUtilsTests {
     }
 
     @Test
+    void testJoinParameters() {
+        assertEquals("Foo p0, Bar p1", TemplateUtils.getInstance().joinParameters(ImmutableList.of("Foo", "Bar")));
+        assertEquals("Foo p0", TemplateUtils.getInstance().joinParameters(ImmutableList.of("Foo")));
+        assertEquals("", TemplateUtils.getInstance().joinParameters(ImmutableList.of()));
+        assertEquals(", Foo p0, Bar p1",
+                TemplateUtils.getInstance().joinParameters(ImmutableList.of("Foo", "Bar"), true));
+        assertEquals(", Foo p0", TemplateUtils.getInstance().joinParameters(ImmutableList.of("Foo"), true));
+        assertEquals("", TemplateUtils.getInstance().joinParameters(ImmutableList.of(), true));
+    }
+
+    @Test
+    void testParameters() {
+        assertEquals("p0, p1", TemplateUtils.getInstance().parameters(2));
+        assertEquals("p0", TemplateUtils.getInstance().parameters(1));
+        assertEquals("", TemplateUtils.getInstance().parameters(0));
+        assertEquals(", p0, p1", TemplateUtils.getInstance().parameters(2, true));
+        assertEquals(", p0", TemplateUtils.getInstance().parameters(1, true));
+        assertEquals("", TemplateUtils.getInstance().parameters(0, true));
+    }
+
+    @Test
     void testCaseFormats() {
         assertEquals(CaseFormat.LOWER_HYPHEN, TemplateUtils.getInstance().getLowerHyphenCase());
         assertEquals(CaseFormat.LOWER_UNDERSCORE, TemplateUtils.getInstance().getLowerUnderscoreCase());
