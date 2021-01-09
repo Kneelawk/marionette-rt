@@ -1,6 +1,7 @@
 package com.kneelawk.marionette.rt.mod.client.template;
 
 import com.google.common.collect.ImmutableList;
+import com.kneelawk.marionette.rt.mod.MinecraftAccessQueueCallbackInfo;
 import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
@@ -16,4 +17,7 @@ public class MinecraftClientAccessTData {
     String signalClass;
     @Singular
     ImmutableList<String> signalNames;
+    String queueClass;
+    @Singular
+    ImmutableList<MinecraftAccessQueueCallbackInfo> queueCallbacks;
 }

@@ -1,5 +1,6 @@
 package com.kneelawk.marionette.rt.queue;
 
+import com.kneelawk.marionette.rt.rmi.RMIUtils;
 import com.kneelawk.marionette.rt.util.BlockingCurrentThreadExecutor;
 import com.kneelawk.marionette.rt.util.MarionetteExecutors;
 
@@ -46,7 +47,7 @@ public class BasicCallbackQueue<C> implements CallbackQueue<C> {
             BlockingCurrentThreadExecutor executor = new BlockingCurrentThreadExecutor();
             Future<Void> callbackFuture = MarionetteExecutors.getCallbackConsumerExecutor().submit(() -> {
                 try {
-                    consumer.accept(currentCallback, executor);
+                    consumer.accept(currentCallback, RMIUtils.export(executor));
                 } finally {
                     executor.shutdown();
                 }

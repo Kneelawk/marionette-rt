@@ -37,4 +37,25 @@ public class ${data.className} extends AbstractMinecraftInstance {
         return future;
     }
 #end
+#foreach($queue in $data.queueCallbacks)
+#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $queue.callbackName))
+
+    public ListenableFuture<$queue.callbackReturnType> add${funcName}Callback($queue.callbackClass callback) throws RemoteException {
+        SettableFuture<$queue.callbackReturnType> future = SettableFuture.create();
+        rmiAccess.add${funcName}Callback(RMIUtils.export((thread$utils.parameters($queue.parameterCount, true)) -> {
+            try {
+#if($queue.callbackReturnType == "Void")
+                callback.callback(thread$utils.parameters($queue.parameterCount, true));
+                future.set(null);
+#else
+                future.set(callback.callback(thread$utils.parameters($queue.parameterCount, true)));
+#end
+            } catch (Exception e) {
+                future.setException(e);
+            }
+        }));
+        chainFutureError(future);
+        return future;
+    }
+#end
 }

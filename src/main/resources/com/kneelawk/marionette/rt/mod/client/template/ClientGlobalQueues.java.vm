@@ -1,0 +1,27 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.mod.client.template.ClientGlobalQueuesTData" *###
+#* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *###
+package $data.packageName;
+
+import com.kneelawk.marionette.rt.queue.BasicCallbackQueue;
+import com.kneelawk.marionette.rt.queue.CallbackConsumer;
+
+#foreach($im in ${data.importNames})
+import $im;
+#end
+
+public class $data.className {
+#foreach($queue in $data.queueCallbacks)
+#set($fieldName = $utils.lowerCamelCase.to($utils.upperUnderscoreCase, $queue.callbackName))
+#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $queue.callbackName))
+
+    private static final BasicCallbackQueue<$queue.callbackClass> $fieldName = new BasicCallbackQueue<>();
+
+    public static void add${funcName}Callback($queue.callbackClass callback) {
+        ${fieldName}.push(callback);
+    }
+
+    public static void poll${funcName}Callbacks(CallbackConsumer<$queue.callbackClass> consumer) {
+        ${fieldName}.pollAll(consumer);
+    }
+#end
+}

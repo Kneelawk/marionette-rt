@@ -5,11 +5,13 @@ import com.kneelawk.marionette.rt.instance.template.MinecraftClientInstanceBuild
 import com.kneelawk.marionette.rt.instance.template.MinecraftClientInstanceTData;
 import com.kneelawk.marionette.rt.instance.template.MinecraftServerInstanceBuilderTData;
 import com.kneelawk.marionette.rt.instance.template.MinecraftServerInstanceTData;
+import com.kneelawk.marionette.rt.mod.client.template.ClientGlobalQueuesTData;
 import com.kneelawk.marionette.rt.mod.client.template.ClientGlobalSignalsTData;
 import com.kneelawk.marionette.rt.mod.client.template.MarionetteClientPreLaunchTData;
 import com.kneelawk.marionette.rt.mod.client.template.MinecraftClientAccessTData;
 import com.kneelawk.marionette.rt.mod.server.template.MarionetteServerPreLaunchTData;
 import com.kneelawk.marionette.rt.mod.server.template.MinecraftServerAccessTData;
+import com.kneelawk.marionette.rt.mod.server.template.ServerGlobalQueuesTData;
 import com.kneelawk.marionette.rt.mod.server.template.ServerGlobalSignalsTData;
 import com.kneelawk.marionette.rt.mod.template.MarionetteModPreLaunchTData;
 import com.kneelawk.marionette.rt.rmi.template.RMIMinecraftClientAccessTData;
@@ -72,6 +74,14 @@ public class MarionetteTemplates {
 
     public static InputStream getServerGlobalSignalsTemplate() {
         return ServerGlobalSignalsTData.class.getResourceAsStream("ServerGlobalSignals.java.vm");
+    }
+
+    public static InputStream getClientGlobalQueuesTemplate() {
+        return ClientGlobalQueuesTData.class.getResourceAsStream("ClientGlobalQueues.java.vm");
+    }
+
+    public static InputStream getServerGlobalQueuesTemplate() {
+        return ServerGlobalQueuesTData.class.getResourceAsStream("ServerGlobalQueues.java.vm");
     }
 
     public static InputStream getCallbackTemplate() {

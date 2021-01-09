@@ -7,13 +7,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ThreadWatchUnbinder extends Thread {
-    private final Remote toUnbind;
+    private final Runnable unbind;
 
     public ThreadWatchUnbinder(Remote toUnbind) {
-        this.toUnbind = toUnbind;
+        this(() -> {
+            try {
+                System.out.println("Unbinding RMI object...");
+                UnicastRemoteObject.unexportObject(toUnbind, true);
+            } catch (NoSuchObjectException e) {
+                e.printStackTrace();
+            }
+        }, "RMI-Unbinder");
+    }
+
+    public ThreadWatchUnbinder(Runnable unbind, String name) {
+        super(name);
+        this.unbind = unbind;
 
         setDaemon(true);
-        setName("RMI-Unbinder");
     }
 
     @Override
@@ -40,11 +51,6 @@ public class ThreadWatchUnbinder extends Thread {
             }
         }
 
-        try {
-            System.out.println("Unbinding RMI object...");
-            UnicastRemoteObject.unexportObject(toUnbind, true);
-        } catch (NoSuchObjectException e) {
-            e.printStackTrace();
-        }
+        unbind.run();
     }
 }

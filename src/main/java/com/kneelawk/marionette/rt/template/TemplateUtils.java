@@ -67,6 +67,21 @@ public class TemplateUtils {
         return tmp.toString();
     }
 
+    public String parameters(int count) {
+        return parameters(count, false);
+    }
+
+    public String parameters(int count, boolean firstComma) {
+        StringBuilder tmp = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            if (i != 0 || firstComma) {
+                tmp.append(", ");
+            }
+            tmp.append("p").append(i);
+        }
+        return tmp.toString();
+    }
+
     public CaseFormat getLowerHyphenCase() {
         return CaseFormat.LOWER_HYPHEN;
     }

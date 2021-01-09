@@ -15,4 +15,6 @@ public class MinecraftClientInstanceTData {
     String rmiClass;
     @Singular
     ImmutableList<String> signalNames;
+    @Singular
+    ImmutableList<InstanceQueueCallbackInfo> queueCallbacks;
 }
