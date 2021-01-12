@@ -1,6 +1,8 @@
 package com.kneelawk.marionette.rt.mod;
 
+import com.google.common.collect.ImmutableList;
 import lombok.Builder;
+import lombok.Singular;
 import lombok.Value;
 
 @Value
@@ -8,4 +10,6 @@ import lombok.Value;
 public class MinecraftAccessQueueCallbackInfo {
     String callbackName;
     String callbackClass;
+    @Singular
+    ImmutableList<CallbackMaybeProxied> parameterTypes;
 }

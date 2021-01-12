@@ -4,6 +4,7 @@ package $data.packageName;
 
 import com.kneelawk.marionette.rt.queue.BasicCallbackQueue;
 import com.kneelawk.marionette.rt.queue.CallbackConsumer;
+import com.kneelawk.marionette.rt.rmi.RMIUtils;
 
 #foreach($im in ${data.importNames})
 import $im;
@@ -20,8 +21,8 @@ public class $data.className {
         ${fieldName}.push(callback);
     }
 
-    public static void poll${funcName}Callbacks(CallbackConsumer<$queue.callbackClass> consumer) {
-        ${fieldName}.pollAll(consumer);
+    public static void call${funcName}Callbacks($utils.joinParameters($queue.parameterTypes)) {
+        ${fieldName}.pollAll((callback, currentThread) -> callback.callback(currentThread$utils.wrapParameters($queue.parameterTypes, true)));
     }
 #end
 }
