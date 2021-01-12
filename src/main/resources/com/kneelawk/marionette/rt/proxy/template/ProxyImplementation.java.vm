@@ -1,0 +1,33 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.proxy.template.ProxyImplementationTData" *#
+#* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *#
+package $data.packageName;
+
+import com.kneelawk.marionette.rt.util.ExecutionUtils;
+import com.kneelawk.marionette.rt.rmi.CurrentThread;
+import com.kneelawk.marionette.rt.rmi.RMIUtils;
+
+#foreach($im in ${data.importNames})
+import $im;
+#end
+
+public class $data.className implements $data.rmiClass {
+    private final $data.proxiedClass proxy;
+
+    public ${data.className}($data.proxiedClass proxy) {
+        this.proxy = proxy;
+    }
+
+    public $data.proxiedClass getProxy() {
+        return proxy;
+    }
+#foreach($method in $data.methods)
+
+    public $method.returnType ${method.methodName}(CurrentThread thread$utils.joinParameters($method.parameterTypes, true))#if(!$method.exceptionTypes.isEmpty()) throws $utils.join($method.exceptionTypes, ", ")#end {
+#if($method.returnType.toString().equals("void"))
+        ExecutionUtils.executeIn(thread, #if($method.parameterTypes.isEmpty())proxy::#else() -> proxy.#end${method.methodName}#if(!$method.parameterTypes.isEmpty())($utils.unwrapParameters($method.parameterTypes, false))#end);
+#else
+        return ${utils.wrapStart($method.returnType)}ExecutionUtils.executeIn(thread, #if($method.parameterTypes.isEmpty())proxy::#else() -> proxy.#end${method.methodName}#if(!$method.parameterTypes.isEmpty())($utils.unwrapParameters($method.parameterTypes, false))#end)${utils.wrapEnd($method.returnType)};
+#end
+    }
+#end
+}

@@ -82,6 +82,64 @@ public class TemplateUtils {
         return tmp.toString();
     }
 
+    public String unwrapStart(Object o) {
+        if (o instanceof MaybeProxied && ((MaybeProxied) o).getProxyImplementationClass() != null) {
+            return "((" + ((MaybeProxied) o).getProxyImplementationClass() + ") RMIUtils.requireOriginal(";
+        } else {
+            return "";
+        }
+    }
+
+    public String unwrapEnd(Object o) {
+        if (o instanceof MaybeProxied && ((MaybeProxied) o).getProxyImplementationClass() != null) {
+            return ")).getProxy()";
+        } else {
+            return "";
+        }
+    }
+
+    public String unwrapParameters(Iterable<?> parameterTypes, boolean firstComma) {
+        StringBuilder tmp = new StringBuilder();
+        int i = 0;
+        for (Object o : parameterTypes) {
+            if (i != 0 || firstComma) {
+                tmp.append(", ");
+            }
+            tmp.append(unwrapStart(o)).append("p").append(i).append(unwrapEnd(o));
+            i++;
+        }
+        return tmp.toString();
+    }
+
+    public String wrapStart(Object o) {
+        if (o instanceof MaybeProxied && ((MaybeProxied) o).getProxyImplementationClass() != null) {
+            return "RMIUtils.export(new " + ((MaybeProxied) o).getProxyImplementationClass() + "(";
+        } else {
+            return "";
+        }
+    }
+
+    public String wrapEnd(Object o) {
+        if (o instanceof MaybeProxied && ((MaybeProxied) o).getProxyImplementationClass() != null) {
+            return "))";
+        } else {
+            return "";
+        }
+    }
+
+    public String wrapParameters(Iterable<?> parameterTypes, boolean firstComma) {
+        StringBuilder tmp = new StringBuilder();
+        int i = 0;
+        for (Object o : parameterTypes) {
+            if (i != 0 || firstComma) {
+                tmp.append(", ");
+            }
+            tmp.append(wrapStart(o)).append("p").append(i).append(wrapEnd(o));
+            i++;
+        }
+        return tmp.toString();
+    }
+
     public CaseFormat getLowerHyphenCase() {
         return CaseFormat.LOWER_HYPHEN;
     }

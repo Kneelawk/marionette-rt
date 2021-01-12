@@ -1,0 +1,18 @@
+#* @vtlvariable name="data" type="com.kneelawk.marionette.rt.proxy.template.ProxyInterfaceTData" *#
+#* @vtlvariable name="utils" type="com.kneelawk.marionette.rt.template.TemplateUtils" *#
+package $data.packageName;
+
+import com.kneelawk.marionette.rt.rmi.CurrentThread;
+
+import java.rmi.Remote;
+
+#foreach($im in ${data.importNames})
+import $im;
+#end
+
+public interface $data.className extends Remote {
+#foreach($method in $data.methods)
+
+    $method.returnType ${method.methodName}(CurrentThread thread$utils.joinParameters($method.parameterTypes, true))#if(!$method.exceptionTypes.isEmpty()) throws $utils.join($method.exceptionTypes, ", ")#end;
+#end
+}

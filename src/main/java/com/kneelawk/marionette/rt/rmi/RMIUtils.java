@@ -28,6 +28,10 @@ public class RMIUtils {
 
     @SuppressWarnings("unchecked")
     public static <T> T findOriginal(T export) {
+        if (export == null) {
+            return null;
+        }
+
         WeakReference<Object> ref = EXPORTS.get(export);
 
         if (ref == null) {
@@ -38,6 +42,10 @@ public class RMIUtils {
     }
 
     public static <T> T requireOriginal(T export) {
+        if (export == null) {
+            return null;
+        }
+
         T original = findOriginal(export);
 
         if (original == null) {

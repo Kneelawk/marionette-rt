@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     api 'com.google.guava:guava:21.0'
-    implementation 'org.jetbrains:annotations:19.0.0'
+    api 'org.jetbrains:annotations:19.0.0'
     implementation 'commons-io:commons-io:2.8.0'
 
     testImplementation 'com.google.errorprone:error_prone_annotations:2.4.0'

@@ -2,6 +2,7 @@ package com.kneelawk.marionette.rt.template;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableList;
+import com.kneelawk.marionette.rt.proxy.template.ImplementationMaybeProxied;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,6 +55,120 @@ public class TemplateUtilsTests {
         assertEquals(", p0, p1", TemplateUtils.getInstance().parameters(2, true));
         assertEquals(", p0", TemplateUtils.getInstance().parameters(1, true));
         assertEquals("", TemplateUtils.getInstance().parameters(0, true));
+    }
+
+    @Test
+    void testUnwrapStart() {
+        assertEquals("", TemplateUtils.getInstance().unwrapStart("String"));
+        assertEquals("",
+                TemplateUtils.getInstance().unwrapStart(ImplementationMaybeProxied.ofUnproxied("String")));
+        assertEquals("((MinecraftClientProxy) RMIUtils.requireOriginal(", TemplateUtils.getInstance().unwrapStart(
+                ImplementationMaybeProxied.ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy")));
+    }
+
+    @Test
+    void testUnwrapEnd() {
+        assertEquals("", TemplateUtils.getInstance().unwrapEnd("String"));
+        assertEquals("",
+                TemplateUtils.getInstance().unwrapEnd(ImplementationMaybeProxied.ofUnproxied("String")));
+        assertEquals(")).getProxy()", TemplateUtils.getInstance().unwrapEnd(
+                ImplementationMaybeProxied.ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy")));
+    }
+
+    @Test
+    void testWrapStart() {
+        assertEquals("", TemplateUtils.getInstance().wrapStart("String"));
+        assertEquals("",
+                TemplateUtils.getInstance().wrapStart(ImplementationMaybeProxied.ofUnproxied("String")));
+        assertEquals("RMIUtils.export(new MinecraftClientProxy(", TemplateUtils.getInstance().wrapStart(
+                ImplementationMaybeProxied.ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy")));
+    }
+
+    @Test
+    void testWrapEnd() {
+        assertEquals("", TemplateUtils.getInstance().wrapEnd("String"));
+        assertEquals("", TemplateUtils.getInstance().wrapEnd(ImplementationMaybeProxied.ofUnproxied("String")));
+        assertEquals("))", TemplateUtils.getInstance().wrapEnd(
+                ImplementationMaybeProxied.ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy")));
+    }
+
+    @Test
+    void testUnwrapParameters() {
+        assertEquals("p0, p1", TemplateUtils.getInstance().unwrapParameters(ImmutableList.of("Foo", "Bar"), false));
+        assertEquals("p0", TemplateUtils.getInstance().unwrapParameters(ImmutableList.of("Foo"), false));
+        assertEquals("p0, p1", TemplateUtils.getInstance().unwrapParameters(ImmutableList
+                        .of(ImplementationMaybeProxied.ofUnproxied("Foo"), ImplementationMaybeProxied.ofUnproxied("Bar")),
+                false));
+        assertEquals("p0", TemplateUtils.getInstance()
+                .unwrapParameters(ImmutableList.of(ImplementationMaybeProxied.ofUnproxied("Foo")), false));
+        assertEquals(
+                "((MinecraftClientProxy) RMIUtils.requireOriginal(p0)).getProxy(), ((TitleScreenProxy) RMIUtils.requireOriginal(p1)).getProxy()",
+                TemplateUtils.getInstance().unwrapParameters(ImmutableList.of(ImplementationMaybeProxied
+                                .ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy"),
+                        ImplementationMaybeProxied.ofImplementation("RMITitleScreenProxy", "TitleScreenProxy")),
+                        false));
+        assertEquals("((MinecraftClientProxy) RMIUtils.requireOriginal(p0)).getProxy()", TemplateUtils.getInstance()
+                .unwrapParameters(ImmutableList.of(ImplementationMaybeProxied
+                        .ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy")), false));
+        assertEquals("", TemplateUtils.getInstance().unwrapParameters(ImmutableList.of(), false));
+        assertEquals(", p0, p1", TemplateUtils.getInstance().unwrapParameters(ImmutableList.of("Foo", "Bar"), true));
+        assertEquals(", p0", TemplateUtils.getInstance().unwrapParameters(ImmutableList.of("Foo"), true));
+        assertEquals(", p0, p1", TemplateUtils.getInstance().unwrapParameters(ImmutableList
+                        .of(ImplementationMaybeProxied.ofUnproxied("Foo"), ImplementationMaybeProxied.ofUnproxied("Bar")),
+                true));
+        assertEquals(", p0", TemplateUtils.getInstance()
+                .unwrapParameters(ImmutableList.of(ImplementationMaybeProxied.ofUnproxied("Foo")), true));
+        assertEquals(
+                ", ((MinecraftClientProxy) RMIUtils.requireOriginal(p0)).getProxy(), ((TitleScreenProxy) RMIUtils.requireOriginal(p1)).getProxy()",
+                TemplateUtils.getInstance().unwrapParameters(ImmutableList.of(ImplementationMaybeProxied
+                                .ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy"),
+                        ImplementationMaybeProxied.ofImplementation("RMITitleScreenProxy", "TitleScreenProxy")), true));
+        assertEquals(", ((MinecraftClientProxy) RMIUtils.requireOriginal(p0)).getProxy()", TemplateUtils.getInstance()
+                .unwrapParameters(ImmutableList.of(ImplementationMaybeProxied
+                        .ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy")), true));
+        assertEquals("", TemplateUtils.getInstance().unwrapParameters(ImmutableList.of(), true));
+    }
+
+    @Test
+    void testWrapParameters() {
+        assertEquals("p0, p1", TemplateUtils.getInstance().wrapParameters(ImmutableList.of("Foo", "Bar"), false));
+        assertEquals("p0", TemplateUtils.getInstance().wrapParameters(ImmutableList.of("Foo"), false));
+        assertEquals("p0, p1", TemplateUtils.getInstance().wrapParameters(ImmutableList
+                        .of(ImplementationMaybeProxied.ofUnproxied("Foo"), ImplementationMaybeProxied.ofUnproxied("Bar")),
+                false));
+        assertEquals("p0", TemplateUtils.getInstance()
+                .wrapParameters(ImmutableList.of(ImplementationMaybeProxied.ofUnproxied("Foo")), false));
+        assertEquals("RMIUtils.export(new MinecraftClientProxy(p0)), RMIUtils.export(new TitleScreenProxy(p1))",
+                TemplateUtils.getInstance().wrapParameters(
+                        ImmutableList.of(ImplementationMaybeProxied
+                                        .ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy"),
+                                ImplementationMaybeProxied.ofImplementation("RMITitleScreenProxy", "TitleScreenProxy")),
+                        false));
+        assertEquals("RMIUtils.export(new MinecraftClientProxy(p0))",
+                TemplateUtils.getInstance().wrapParameters(ImmutableList
+                                .of(ImplementationMaybeProxied
+                                        .ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy")),
+                        false));
+        assertEquals("", TemplateUtils.getInstance().wrapParameters(ImmutableList.of(), false));
+        assertEquals(", p0, p1", TemplateUtils.getInstance().wrapParameters(ImmutableList.of("Foo", "Bar"), true));
+        assertEquals(", p0", TemplateUtils.getInstance().wrapParameters(ImmutableList.of("Foo"), true));
+        assertEquals(", p0, p1", TemplateUtils.getInstance().wrapParameters(ImmutableList
+                        .of(ImplementationMaybeProxied.ofUnproxied("Foo"), ImplementationMaybeProxied.ofUnproxied("Bar")),
+                true));
+        assertEquals(", p0", TemplateUtils.getInstance()
+                .wrapParameters(ImmutableList.of(ImplementationMaybeProxied.ofUnproxied("Foo")), true));
+        assertEquals(", RMIUtils.export(new MinecraftClientProxy(p0)), RMIUtils.export(new TitleScreenProxy(p1))",
+                TemplateUtils.getInstance().wrapParameters(
+                        ImmutableList.of(ImplementationMaybeProxied
+                                        .ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy"),
+                                ImplementationMaybeProxied.ofImplementation("RMITitleScreenProxy", "TitleScreenProxy")),
+                        true));
+        assertEquals(", RMIUtils.export(new MinecraftClientProxy(p0))",
+                TemplateUtils.getInstance().wrapParameters(ImmutableList
+                                .of(ImplementationMaybeProxied
+                                        .ofImplementation("RMIMinecraftClientProxy", "MinecraftClientProxy")),
+                        true));
+        assertEquals("", TemplateUtils.getInstance().wrapParameters(ImmutableList.of(), true));
     }
 
     @Test

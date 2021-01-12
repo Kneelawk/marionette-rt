@@ -14,6 +14,8 @@ import com.kneelawk.marionette.rt.mod.server.template.MinecraftServerAccessTData
 import com.kneelawk.marionette.rt.mod.server.template.ServerGlobalQueuesTData;
 import com.kneelawk.marionette.rt.mod.server.template.ServerGlobalSignalsTData;
 import com.kneelawk.marionette.rt.mod.template.MarionetteModPreLaunchTData;
+import com.kneelawk.marionette.rt.proxy.template.ProxyImplementationTData;
+import com.kneelawk.marionette.rt.proxy.template.ProxyInterfaceTData;
 import com.kneelawk.marionette.rt.rmi.template.RMIMinecraftClientAccessTData;
 import com.kneelawk.marionette.rt.rmi.template.RMIMinecraftServerAccessTData;
 
@@ -86,5 +88,13 @@ public class MarionetteTemplates {
 
     public static InputStream getCallbackTemplate() {
         return CallbackTData.class.getResourceAsStream("Callback.java.vm");
+    }
+
+    public static InputStream getProxyInterfaceTemplate() {
+        return ProxyInterfaceTData.class.getResourceAsStream("ProxyInterface.java.vm");
+    }
+
+    public static InputStream getProxyImplementationTemplate() {
+        return ProxyImplementationTData.class.getResourceAsStream("ProxyImplementation.java.vm");
     }
 }
