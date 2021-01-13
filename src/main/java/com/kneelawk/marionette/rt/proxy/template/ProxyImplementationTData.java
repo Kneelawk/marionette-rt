@@ -19,4 +19,8 @@ public class ProxyImplementationTData {
     String proxiedClass;
     @Singular
     ImmutableList<ProxyImplementationMethodTData> methods;
+    @Singular
+    ImmutableList<PropertyImplementationTData> getters;
+    @Singular
+    ImmutableList<PropertyImplementationTData> setters;
 }

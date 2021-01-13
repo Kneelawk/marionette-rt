@@ -33,4 +33,26 @@ public class $data.className#if(!$utils.isNull($data.superClass)) extends $data.
 #end
     }
 #end
+#foreach($getter in $data.getters)
+#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $getter.name))
+
+    public $getter.type get${funcName}() throws RemoteException {
+        return ${utils.wrapStart($getter.type)}proxy.${getter.name}${utils.wrapEnd($getter.type)};
+    }
+
+    public $getter.type get${funcName}(CurrentThread thread) throws RemoteException {
+        return ${utils.wrapStart($getter.type)}ExecutionUtils.executeIn(thread, () -> proxy.${getter.name})${utils.wrapEnd($getter.type)};
+    }
+#end
+#foreach($setter in $data.setters)
+#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $setter.name))
+
+    public void set${funcName}($setter.type p0) throws RemoteException {
+        proxy.${setter.name} = ${utils.unwrapStart($setter.type)}p0${utils.unwrapEnd($setter.type)};
+    }
+
+    public void set${funcName}(CurrentThread thread, $setter.type p0) throws RemoteException {
+        ExecutionUtils.executeIn(thread, () -> proxy.${setter.name} = ${utils.unwrapStart($setter.type)}p0${utils.unwrapEnd($setter.type)});
+    }
+#end
 }

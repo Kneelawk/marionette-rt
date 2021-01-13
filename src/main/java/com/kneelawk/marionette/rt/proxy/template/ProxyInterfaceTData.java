@@ -17,4 +17,8 @@ public class ProxyInterfaceTData {
     String superClass;
     @Singular
     ImmutableList<ProxyInterfaceMethodTData> methods;
+    @Singular
+    ImmutableList<PropertyInterfaceTData> getters;
+    @Singular
+    ImmutableList<PropertyInterfaceTData> setters;
 }
