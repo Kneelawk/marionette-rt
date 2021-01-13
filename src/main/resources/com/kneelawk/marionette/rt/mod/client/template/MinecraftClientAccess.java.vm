@@ -3,7 +3,10 @@
 package ${data.packageName};
 
 import com.kneelawk.marionette.rt.mod.AbstractMinecraftAccess;
+import com.kneelawk.marionette.rt.rmi.CurrentThread;
 import com.kneelawk.marionette.rt.rmi.RMIRunnable;
+import com.kneelawk.marionette.rt.rmi.RMIUtils;
+import com.kneelawk.marionette.rt.util.ExecutionUtils;
 
 import java.rmi.RemoteException;
 
@@ -26,6 +29,13 @@ public class ${data.className} extends AbstractMinecraftAccess implements ${data
     @Override
     public void add${funcName}Callback($queue.callbackClass callback) {
         ${data.queueClass}.add${funcName}Callback(callback);
+    }
+#end
+#foreach($constructor in $data.constructors)
+
+    @Override
+    public $constructor.constructorClass new${constructor.constructorName}(CurrentThread thread$utils.joinParameters($constructor.parameters, true)) #if(!$constructor.exceptions.isEmpty())throws $utils.join($constructor.exceptions, ", ") #end{
+        return ${utils.wrapStart($constructor.constructorClass)}ExecutionUtils.executeIn(thread, () -> new ${constructor.constructorClass.unproxiedClass}($utils.unwrapParameters($constructor.parameters, false)))${utils.wrapEnd($constructor.constructorClass)};
     }
 #end
 }

@@ -21,4 +21,8 @@ public interface ${data.className} extends Remote {
 
     void add${utils.lowerCamelCase.to($utils.upperCamelCase, $queue.callbackName)}Callback($queue.callbackClass queueCallback) throws RemoteException;
 #end
+#foreach($constructor in $data.constructors)
+
+    $constructor.constructorClass new${constructor.constructorName}(CurrentThread thread$utils.joinParameters($constructor.parameters, true))#if(!$constructor.exceptions.isEmpty()) throws $utils.join($constructor.exceptions, ", ")#end;
+#end
 }

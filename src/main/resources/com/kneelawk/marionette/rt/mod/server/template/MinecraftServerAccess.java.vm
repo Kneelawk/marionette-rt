@@ -28,4 +28,11 @@ public class ${data.className} extends AbstractMinecraftAccess implements ${data
         ${data.queueClass}.add${funcName}Callback(callback);
     }
 #end
+#foreach($constructor in $data.constructors)
+
+    @Override
+    public $constructor.constructorClass new${constructor.constructorName}(CurrentThread thread$utils.joinParameters($constructor.parameters, true)) #if(!$constructor.exceptions.isEmpty())throws $utils.join($constructor.exceptions, ", ") #end{
+        return ${utils.wrapStart($constructor.constructorClass)}ExecutionUtils.executeIn(thread, () -> new ${constructor.constructorClass.unproxiedClass}($utils.unwrapParameters($constructor.parameters, false)))${utils.wrapEnd($constructor.constructorClass)};
+    }
+#end
 }

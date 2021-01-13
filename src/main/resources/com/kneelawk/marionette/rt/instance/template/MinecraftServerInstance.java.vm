@@ -58,4 +58,10 @@ public class ${data.className} extends AbstractMinecraftInstance {
         return future;
     }
 #end
+#foreach($constructor in $data.constructors)
+
+    public $constructor.constructorClass new${constructor.constructorName}(CurrentThread thread$utils.joinParameters($constructor.parameters, true))#if(!$constructor.exceptions.isEmpty()) throws $utils.join($constructor.exceptions, ", ")#end {
+        return rmiAccess.new${constructor.constructorName}(thread$utils.parameters($constructor.parameters.size(), true));
+    }
+#end
 }

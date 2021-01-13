@@ -16,4 +16,6 @@ public class RMIMinecraftClientAccessTData {
     ImmutableList<String> signalNames;
     @Singular
     ImmutableList<RMIMinecraftAccessQueueCallbackInfo> queueCallbacks;
+    @Singular
+    ImmutableList<RMIMinecraftAccessConstructorTData> constructors;
 }

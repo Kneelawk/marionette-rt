@@ -6,6 +6,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import com.kneelawk.marionette.rt.instance.AbstractMinecraftInstance;
 import com.kneelawk.marionette.rt.instance.LogWatcherThread;
+import com.kneelawk.marionette.rt.rmi.CurrentThread;
 import com.kneelawk.marionette.rt.rmi.RMIUtils;
 
 import java.rmi.RemoteException;
@@ -56,6 +57,12 @@ public class ${data.className} extends AbstractMinecraftInstance {
         }));
         chainFutureError(future);
         return future;
+    }
+#end
+#foreach($constructor in $data.constructors)
+
+    public $constructor.constructorClass new${constructor.constructorName}(CurrentThread thread$utils.joinParameters($constructor.parameters, true))#if(!$constructor.exceptions.isEmpty()) throws $utils.join($constructor.exceptions, ", ")#end {
+        return rmiAccess.new${constructor.constructorName}(thread$utils.parameters($constructor.parameters.size(), true));
     }
 #end
 }
