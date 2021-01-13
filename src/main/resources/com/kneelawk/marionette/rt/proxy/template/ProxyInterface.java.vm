@@ -10,7 +10,7 @@ import java.rmi.Remote;
 import $im;
 #end
 
-public interface $data.className extends Remote {
+public interface $data.className extends Remote#if(!$utils.isNull($data.superClass)), $data.superClass#end {
 #foreach($method in $data.methods)
 
     $method.returnType ${method.methodName}(CurrentThread thread$utils.joinParameters($method.parameterTypes, true))#if(!$method.exceptionTypes.isEmpty()) throws $utils.join($method.exceptionTypes, ", ")#end;

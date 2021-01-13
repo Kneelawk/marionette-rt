@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
+import org.jetbrains.annotations.Nullable;
 
 @Value
 @Builder(builderClassName = "Builder")
@@ -12,6 +13,8 @@ public class ProxyInterfaceTData {
     String className;
     @Singular
     ImmutableList<String> importNames;
+    @Nullable
+    String superClass;
     @Singular
     ImmutableList<ProxyInterfaceMethodTData> methods;
 }

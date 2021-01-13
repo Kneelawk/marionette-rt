@@ -10,10 +10,13 @@ import com.kneelawk.marionette.rt.rmi.RMIUtils;
 import $im;
 #end
 
-public class $data.className implements $data.rmiClass {
+public class $data.className#if(!$utils.isNull($data.superClass)) extends $data.superClass#end implements $data.rmiClass {
     private final $data.proxiedClass proxy;
 
     public ${data.className}($data.proxiedClass proxy) {
+#if(!$utils.isNull($data.superClass))
+        super(proxy);
+#end
         this.proxy = proxy;
     }
 
