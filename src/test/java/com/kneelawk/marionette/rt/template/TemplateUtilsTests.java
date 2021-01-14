@@ -179,4 +179,18 @@ public class TemplateUtilsTests {
         assertEquals(CaseFormat.UPPER_CAMEL, TemplateUtils.getInstance().getUpperCamelCase());
         assertEquals(CaseFormat.UPPER_UNDERSCORE, TemplateUtils.getInstance().getUpperUnderscoreCase());
     }
+
+    @Test
+    void testDetectCase() {
+        assertEquals(CaseFormat.LOWER_HYPHEN, TemplateUtils.getInstance().detectCase("foo-bar"));
+        assertEquals(CaseFormat.LOWER_UNDERSCORE, TemplateUtils.getInstance().detectCase("foo_bar"));
+        assertEquals(CaseFormat.LOWER_CAMEL, TemplateUtils.getInstance().detectCase("fooBar"));
+        assertEquals(CaseFormat.LOWER_CAMEL, TemplateUtils.getInstance().detectCase("fooBAR"));
+        assertEquals(CaseFormat.LOWER_CAMEL, TemplateUtils.getInstance().detectCase("foo"));
+        assertEquals(CaseFormat.UPPER_CAMEL, TemplateUtils.getInstance().detectCase("FooBar"));
+        assertEquals(CaseFormat.UPPER_CAMEL, TemplateUtils.getInstance().detectCase("FOOBar"));
+        assertEquals(CaseFormat.UPPER_CAMEL, TemplateUtils.getInstance().detectCase("FooBAR"));
+        assertEquals(CaseFormat.UPPER_UNDERSCORE, TemplateUtils.getInstance().detectCase("FOO_BAR"));
+        assertEquals(CaseFormat.UPPER_UNDERSCORE, TemplateUtils.getInstance().detectCase("FOO"));
+    }
 }

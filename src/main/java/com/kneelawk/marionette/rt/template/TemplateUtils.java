@@ -2,6 +2,8 @@ package com.kneelawk.marionette.rt.template;
 
 import com.google.common.base.CaseFormat;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class TemplateUtils {
     private static final TemplateUtils INSTNACE = new TemplateUtils();
 
@@ -158,5 +160,33 @@ public class TemplateUtils {
 
     public CaseFormat getUpperUnderscoreCase() {
         return CaseFormat.UPPER_UNDERSCORE;
+    }
+
+    public CaseFormat detectCase(String string) {
+        checkNotNull(string, "DetectCase string is null");
+
+        if (string.contains("_")) {
+            if (string.toUpperCase().equals(string)) {
+                return CaseFormat.UPPER_UNDERSCORE;
+            } else if (string.toLowerCase().equals(string)) {
+                return CaseFormat.LOWER_UNDERSCORE;
+            }
+        } else if (string.contains("-")) {
+            if (string.toLowerCase().equals(string)) {
+                return CaseFormat.LOWER_HYPHEN;
+            }
+        } else {
+            if (Character.isLowerCase(string.charAt(0)) && string.matches("([a-z]+[A-Z]+\\w+)+")) {
+                return CaseFormat.LOWER_CAMEL;
+            } else if (string.matches("([A-Z]+[a-z]+\\w+)+")) {
+                return CaseFormat.UPPER_CAMEL;
+            } else if (string.toUpperCase().equals(string)) {
+                return CaseFormat.UPPER_UNDERSCORE;
+            } else if (string.toLowerCase().equals(string)) {
+                return CaseFormat.LOWER_CAMEL;
+            }
+        }
+
+        throw new IllegalArgumentException("Unknown case format for string: \"" + string + "\"");
     }
 }

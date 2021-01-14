@@ -34,7 +34,7 @@ public class $data.className#if(!$utils.isNull($data.superClass)) extends $data.
     }
 #end
 #foreach($getter in $data.getters)
-#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $getter.name))
+#set($funcName = $utils.detectCase($getter.name).to($utils.upperCamelCase, $getter.name))
 
     public $getter.type get${funcName}() throws RemoteException {
         return ${utils.wrapStart($getter.type)}proxy.${getter.name}${utils.wrapEnd($getter.type)};
@@ -45,7 +45,7 @@ public class $data.className#if(!$utils.isNull($data.superClass)) extends $data.
     }
 #end
 #foreach($setter in $data.setters)
-#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $setter.name))
+#set($funcName = $utils.detectCase($setter.name).to($utils.upperCamelCase, $setter.name))
 
     public void set${funcName}($setter.type p0) throws RemoteException {
         proxy.${setter.name} = ${utils.unwrapStart($setter.type)}p0${utils.unwrapEnd($setter.type)};

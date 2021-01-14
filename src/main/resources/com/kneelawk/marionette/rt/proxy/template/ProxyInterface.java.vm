@@ -16,14 +16,14 @@ public interface $data.className extends Remote#if(!$utils.isNull($data.superCla
     $method.returnType ${method.methodName}(CurrentThread thread$utils.joinParameters($method.parameterTypes, true))#if(!$method.exceptionTypes.isEmpty()) throws $utils.join($method.exceptionTypes, ", ")#end;
 #end
 #foreach($getter in $data.getters)
-#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $getter.name))
+#set($funcName = $utils.detectCase($getter.name).to($utils.upperCamelCase, $getter.name))
 
     public $getter.type get${funcName}() throws RemoteException;
 
     public $getter.type get${funcName}(CurrentThread thread) throws RemoteException;
 #end
 #foreach($setter in $data.setters)
-#set($funcName = $utils.lowerCamelCase.to($utils.upperCamelCase, $setter.name))
+#set($funcName = $utils.detectCase($setter.name).to($utils.upperCamelCase, $setter.name))
 
     public void set${funcName}($setter.type p0) throws RemoteException;
 
